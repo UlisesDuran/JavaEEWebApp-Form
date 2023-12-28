@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/form")
 public class FormServlet extends HttpServlet {
@@ -27,27 +25,27 @@ public class FormServlet extends HttpServlet {
         boolean habilitar = req.getParameter("habilitar") != null && req.getParameter("habilitar").equals("on");
         String secreto = req.getParameter("secreto");
 
-        List<String> errores = new ArrayList<>();
+        Map<String, String> errores = new HashMap<>();
         if (username == null || username.isBlank()) {
-            errores.add("El usuario es requerido.");
+            errores.put("username","El usuario es requerido.");
         }
         if (password == null || password.isBlank()) {
-            errores.add("La contraseña es requerida.");
+            errores.put("password", "La contraseña es requerida.");
         }
         if (email == null || !email.contains("@")) {
-            errores.add("El email es requerido y ademas debe tener el formato correcto.");
+            errores.put("email","El email es requerido y ademas debe tener el formato correcto.");
         }
         if (pais == null || pais.isBlank() || pais.equals(" ")) {
-            errores.add("El pais es requerido.");
+            errores.put("pais","El pais es requerido.");
         }
         if (lenguajes == null || lenguajes.length == 0) {
-            errores.add("Debe seleccionar al menos un lenguaje.");
+            errores.put("lenguajes","Debe seleccionar al menos un lenguaje.");
         }
         if (roles == null || roles.length == 0) {
-            errores.add("Debe seleccionar al menos un rol.");
+            errores.put("roles","Debe seleccionar al menos un rol.");
         }
         if (idioma == null) {
-            errores.add("Debe seleccionar un idioma.");
+            errores.put("idioma","Debe seleccionar un idioma.");
         }
 
         resp.setContentType("text/html");
